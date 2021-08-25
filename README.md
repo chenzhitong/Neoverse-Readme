@@ -10,56 +10,6 @@ Address: NNMU2ZwYKogK3jh8QaKNLyFYLubRwjTGbo
 
 Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
 
-**2021/8/12**（2）BlindBox
-
-Neo 3.0 Testnet: 
-
-Script Hash: 0x2bcc9c9ad6626396f507f088c5ae06ebf6fa5efa
-
-Address: NdHmtPcQdwPVYqBfKeBuwAHKhkVKFoiow6
-
-Owner: Nijou4aogcbVvVfGGtu8eycTYqPsquKCHf
-
-**2021/8/12** BlindBox
-
-Neo 3.0 Testnet: 
-
-Script Hash: 0xe16e6e13d17f491ad59adcb76a2e90a472db99be
-
-Address: NdHmtPcQdwPVYqBfKeBuwAHKhkVKFoiow6
-
-Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
-
-**2021/8/11** BlindBox
-
-Neo 3.0 Testnet: 
-
-Script Hash: 0x3d50c5ecc2df22ad95ea15aaf398f9cdcaa7fb53
-
-Address: NTa2k1Cc9eTbs6Em9FRnxxy2coq2SotyGb
-
-Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
-
-**2021/8/10 **BlindBox
-
-Neo 3.0 Testnet: 
-
-Script Hash: 0x29a880b9381714d3dc9124ebd934a3642de048c0
-
-Address: NdSgE5Yy4ZXvXmvqHDr7WuiJiBju3GWvEB
-
-Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
-
-**2021/8/8 **BlindBox
-
-Neo 3.0 Testnet: 
-
-Script Hash: 0x4af0b52d128d0b7bdbccc459147a46a354cf9250
-
-Address: NTG17dcRWwxmM6eyPGvrJcyD8PwkBKWTDr
-
-Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
-
 [English](#en) [中文](#zh)
 
 <a name="en"></a>
