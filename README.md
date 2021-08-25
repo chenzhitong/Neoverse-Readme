@@ -350,13 +350,7 @@ UInt160 Owner;
 
 string Name;
 
-byte FirstType;      //0 Blind Box; 1 Fragment; 2 Card
-
-byte SecondType;     //Blind Box: 0, Fragment A-I: 0-8, Card N、E、O: 0-2
-
 BigInteger Number;   //Number of Blind Box / Fragment / Card 
-
-uint RandomIndex;    //The block index where the random number is located, 0 means no randomness
 
 string Image;
 
