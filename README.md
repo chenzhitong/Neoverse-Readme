@@ -1,5 +1,13 @@
 # Neoverse Contract
 
+**2021/8/25** Neoverse
+
+Script Hash: 0x0578511fc665cb1c96e3cb396c2334967b440de7
+
+Address: NeLTsdrcWRJc6rAHPujnhFG4Vv2VD3Wwef
+
+Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
+
 **2021/8/23** Neoverse
 
 Neo 3.0 Testnet: 
@@ -18,17 +26,17 @@ Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
 
 ### NEP-11 Methods
 
-| name                             | parameter                                              | return           | description                                                  |
-| -------------------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
-| symbol                           | --                                                     | String           | Return string "N3"                                           |
-| decimals                         | --                                                     | Integer          | Returns an integer 0                                         |
-| totalSupply                      | --                                                     | Integer          | totalSupply = totalMint - totalBurn                          |
-| balanceOf                        | Hash160（owner）                                       | Integer          | The total number of blind boxes, fragments, and cards for the user |
-| ownerOf                          | ByteArray（tokenId）                                   | Hash160          | Find the owner of a blind box, fragment, card                |
-| [properties](#查询-nft-属性)     | ByteArray（tokenId）                                   | Map              | Query the properties of a token                              |
-| [tokens](#查询所有-NFT)          |                                                        | InteropInterface | Check all issued blind boxes, fragments, cards               |
-| [tokensOf](#查询用户的-nft-资产) | Hash160（owner）                                       | InteropInterface | Query a blind box, fragment, card that someone owns          |
-| [transfer](#转账)                | Hash160（to）<br/>ByteArray（tokenId）<br/>Any（data） | Boolean          |                                                              |
+| name                                     | parameter                                              | return           | description                                                  |
+| ---------------------------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
+| symbol                                   | --                                                     | String           | Return string "N3"                                           |
+| decimals                                 | --                                                     | Integer          | Returns an integer 0                                         |
+| totalSupply                              | --                                                     | Integer          | totalSupply = totalMint - totalBurn                          |
+| balanceOf                                | Hash160（owner）                                       | Integer          | The total number of blind boxes, fragments, and cards for the user |
+| ownerOf                                  | ByteArray（tokenId）                                   | Hash160          | Find the owner of a blind box, fragment, card                |
+| [properties](#get-nft-properties)        | ByteArray（tokenId）                                   | Map              | Query the properties of a token                              |
+| [tokens](#get-all-nft)                   |                                                        | InteropInterface | Check all issued blind boxes, fragments, cards               |
+| [tokensOf](#querying-a-users-nft-assets) | Hash160（owner）                                       | InteropInterface | Query a blind box, fragment, card that someone owns          |
+| [transfer](#transfer)                    | Hash160（to）<br/>ByteArray（tokenId）<br/>Any（data） | Boolean          |                                                              |
 
 ### Customization Method
 
@@ -39,9 +47,10 @@ Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
 | airdrop | Hash160（to）<br/>Integer（amount） | Boolean | Air drop blind box | administrator |
 | isPaused       |      | Boolean | Check the status of the selling blind box |      |
 | getToken | ByteArray（tokenId） | TokenState | Query the full properties of a token | |
-| [onNEP17Payment](#购买盲盒-2个gas) | Hash160（from）<br/>Integer（amount）<br/>Any（_） | void | Buy blind box<br/>GAS→blind box |      |
-| [unBoxing](#开盲盒) | ByteArray（tokenId） | Boolean | Open the blind box<br/>blind box→fragments |      |
-| [compound](#合成) | Array（tokenList） | Boolean | Compound Card<br/>fragments→Card |      |
+| [onNEP17Payment](#buy-a-blind-box-2-gas) | Hash160（from）<br/>Integer（amount）<br/>Any（_） | void | Buy blind box<br/>GAS→blind box |      |
+| [unBoxing](#open-the-blind-box) | ByteArray（tokenId） | Boolean | Open the blind box<br/>blind box→fragments |      |
+| [bulkUnBoxing](#bulk-open-blind-boxes) | Array（tokenList） | Boolean | Open some blind boxes<br/>blind boxes→fragmentes | |
+| [compound](#compound) | Array（tokenList） | Boolean | Compound Card<br/>fragments→Card |      |
 | totalMint | Integer（firstType）<br/>Integer（secondType） | Integer | Get total Mint of one type of tokens. |      |
 
 ### event
@@ -58,31 +67,32 @@ Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
 
 ### NEP-11 方法
 
-| 名称                             | 参数                                                   | 返回值           | 说明                                                         |
-| -------------------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
-| symbol                           | --                                                     | String           | 返回字符串 "N3"                                              |
-| decimals                         | --                                                     | Integer          | 返回整数 0                                                   |
-| totalSupply                      | --                                                     | Integer          | 已发行的盲盒、碎片、卡牌的总量<br/>totalSupply = totalMint - totalBurn |
-| balanceOf                        | Hash160（owner）                                       | Integer          | 该用户盲盒、碎片、卡牌的总量                                 |
-| ownerOf                          | ByteArray（tokenId）                                   | Hash160          | 查询某个盲盒、碎片、卡牌的所有者                             |
-| [properties](#查询-nft-属性)     | ByteArray（tokenId）                                   | Map              | 查询某个盲盒、碎片、卡牌的属性                               |
-| [tokens](#查询所有-NFT)          |                                                        | InteropInterface | 查询所有已发行的盲盒、碎片、卡牌                             |
-| [tokensOf](#查询用户的-nft-资产) | Hash160（owner）                                       | InteropInterface | 查询某个人拥有的盲盒、碎片、卡牌                             |
-| [transfer](#转账)                | Hash160（to）<br/>ByteArray（tokenId）<br/>Any（data） | Boolean          |                                                              |
+| 名称                                     | 参数                                                   | 返回值           | 说明                                                         |
+| ---------------------------------------- | ------------------------------------------------------ | ---------------- | ------------------------------------------------------------ |
+| symbol                                   | --                                                     | String           | 返回字符串 "N3"                                              |
+| decimals                                 | --                                                     | Integer          | 返回整数 0                                                   |
+| totalSupply                              | --                                                     | Integer          | 已发行的盲盒、碎片、卡牌的总量<br/>totalSupply = totalMint - totalBurn |
+| balanceOf                                | Hash160（owner）                                       | Integer          | 该用户盲盒、碎片、卡牌的总量                                 |
+| ownerOf                                  | ByteArray（tokenId）                                   | Hash160          | 查询某个盲盒、碎片、卡牌的所有者                             |
+| [properties](#get-nft-properties)        | ByteArray（tokenId）                                   | Map              | 查询某个盲盒、碎片、卡牌的属性                               |
+| [tokens](#get-all-nft)                   |                                                        | InteropInterface | 查询所有已发行的盲盒、碎片、卡牌                             |
+| [tokensOf](#querying-a-users-nft-assets) | Hash160（owner）                                       | InteropInterface | 查询某个人拥有的盲盒、碎片、卡牌                             |
+| [transfer](#transfer)                    | Hash160（to）<br/>ByteArray（tokenId）<br/>Any（data） | Boolean          |                                                              |
 
 ### 自定义方法
 
-| 名称                               | 参数                                               | 返回值     | 说明                        | 备注   |
-| ---------------------------------- | -------------------------------------------------- | ---------- | --------------------------- | ------ |
-| pause                              |                                                    | Boolean    | 暂停售卖盲盒                | 管理员 |
-| resume                             |                                                    | Boolean    | 恢复售卖盲盒                | 管理员 |
-| airdrop                            | Hash160（to）<br/>Integer（amount）                | Boolean    | 空投盲盒                    | 管理员 |
-| isPaused                           |                                                    | Boolean    | 查询售卖盲盒的状态          |        |
-| getToken                           | ByteArray（tokenId）                               | TokenState | 查询 Token 详情             |        |
-| [onNEP17Payment](#购买盲盒-2个gas) | Hash160（from）<br/>Integer（amount）<br/>Any（_） | void       | 购买盲盒<br/>GAS→盲盒       |        |
-| [unBoxing](#开盲盒)                | ByteArray（tokenId）                               | Boolean    | 开盲盒<br/>盲盒→碎片        |        |
-| [compound](#合成)                  | Array（tokenList）                                 | Boolean    | 合约卡牌<br/>碎片→卡牌      |        |
-| totalMint                          | Integer（firstType）<br/>Integer（secondType）     | Integer    | 查询某类 Token 已铸币的数量 |        |
+| 名称                                     | 参数                                               | 返回值     | 说明                                             | 备注   |
+| ---------------------------------------- | -------------------------------------------------- | ---------- | ------------------------------------------------ | ------ |
+| pause                                    |                                                    | Boolean    | 暂停售卖盲盒                                     | 管理员 |
+| resume                                   |                                                    | Boolean    | 恢复售卖盲盒                                     | 管理员 |
+| airdrop                                  | Hash160（to）<br/>Integer（amount）                | Boolean    | 空投盲盒                                         | 管理员 |
+| isPaused                                 |                                                    | Boolean    | 查询售卖盲盒的状态                               |        |
+| getToken                                 | ByteArray（tokenId）                               | TokenState | 查询 Token 详情                                  |        |
+| [onNEP17Payment](#buy-a-blind-box-2-gas) | Hash160（from）<br/>Integer（amount）<br/>Any（_） | void       | 购买盲盒<br/>GAS→盲盒                            |        |
+| [unBoxing](#open-the-blind-box)          | ByteArray（tokenId）                               | Boolean    | 开盲盒<br/>盲盒→碎片                             |        |
+| [bulkUnBoxing](#bulk-open-blind-boxes)   | Array（tokenList）                                 | Boolean    | Open some blind boxes<br/>blind boxes→fragmentes |        |
+| [compound](#compound)                    | Array（tokenList）                                 | Boolean    | 合约卡牌<br/>碎片→卡牌                           |        |
+| totalMint                                | Integer（firstType）<br/>Integer（secondType）     | Integer    | 查询某类 Token 已铸币的数量                      |        |
 
 ### 事件
 
@@ -453,6 +463,75 @@ RPC Response
             }
         ],
         "tx": "APMIbF1ECHgEAAAAABg6EgAAAAAAABgAAAFJmBt4siqvHVseGXu3tNeYg+it5wEANQwLQmxpbmQgQm94IDERwB8MCHVuQm94aW5nDBQX+f4GOINxe0FGgIHPNuscdHoVm0FifVtSAUIMQFIabPbU9rqwS0/0ct/PPEUfZMR1a41yfdKNpeUJwb+Azv7/dwkCzmzxNPy+dc6fstaDxP5qcTmXf7NDinwxFIAoDCEChg/5yRX1ZfSUJrzN2QgjhR1ohDGD0mHrYjG3+79VnoVBVuezJw=="
+    }
+}
+```
+
+Send raw transaction
+
+……
+
+Get application log
+
+……
+
+### Bulk open blind boxes
+
+RPC Request
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "invokefunction",
+    "params": [
+        "{{ContractHash}}",
+        "bulkUnBoxing",
+        [
+            {
+                "type": "Array",
+                "value": [
+                    {
+                        "type": "ByteArray",
+                        "value": "QmxpbmQgQm94ICMxMA=="
+                    },
+                    {
+                        "type": "ByteArray",
+                        "value": "QmxpbmQgQm94ICMxMQ=="
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "account": "0x4578060c29f4c03f1e16c84312429d991952c94c",
+                "scopes": "Global",
+                "allowedcontracts": [],
+                "allowedgroups": []
+            }
+        ]
+    ]
+}
+```
+
+RPC Response
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": {
+        "script": "DA1CbGluZCBCb3ggIzExDA1CbGluZCBCb3ggIzEwEsARwB8MDGJ1bGtVbkJveGluZwwU5w1Ee5Y0I2w5y+OWHMtlxh9ReAVBYn1bUg==",
+        "state": "HALT",
+        "gasconsumed": "142436230",
+        "exception": null,
+        "stack": [
+            {
+                "type": "Boolean",
+                "value": true
+            }
+        ],
+        "tx": "AP6zPWzGdIAIAAAAAPCTEgAAAAAAETAAAAFMyVIZmZ1CEkPIFh4/wPQpDAZ4RYAATAwNQmxpbmQgQm94ICMxMQwNQmxpbmQgQm94ICMxMBLAEcAfDAxidWxrVW5Cb3hpbmcMFOcNRHuWNCNsOcvjlhzLZcYfUXgFQWJ9W1IBQgxAxW1jHLJXmTij6Y7UhgljaQIdNXXGrwgpG4RZSsiuRdmVRbSNnEp6teFmRU3hrVh/PRuW+vu1k41u04TlDyCgBigMIQJ7joSJfc3+fL335te2ndtu3WMjy+cy6mjdKz1EqA6A8EFW57Mn"
     }
 }
 ```
