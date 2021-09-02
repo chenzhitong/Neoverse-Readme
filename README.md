@@ -1,5 +1,15 @@
 # Neoverse Contract
 
+**2021/8/27** Neoverse
+
+Neo 3.0 Testnet: 
+
+Script Hash: 0x1f98585a66b63384ac8f4c9d32757d437f4923cb
+
+Address: NeS4dVGBH68nDoKXyN6HZJPEBaxavesgMR
+
+Owner: NSuyiLqEfEQZsLJawCbmXW154StRUwdWoM
+
 **2021/8/26** Neoverse
 
 Neo 3.0 Testnet: 
